@@ -9,18 +9,12 @@ var mongoose = require('mongoose'),
 /**
  * Article Schema
  */
-var ArticleSchema = new Schema({
+var CommentSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
-  content: {
+  body: {
     type: String,
     default: '',
     trim: true
@@ -29,10 +23,10 @@ var ArticleSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  comments: [{
+  article: {
     type: Schema.ObjectId,
-    ref: 'Comment'
-  }]
+    ref: 'Article'
+  }
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Comment', CommentSchema);

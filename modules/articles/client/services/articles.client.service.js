@@ -5,9 +5,9 @@
     .module('articles.services')
     .factory('ArticlesService', ArticlesService);
 
-  ArticlesService.$inject = ['$resource', '$log'];
+  ArticlesService.$inject = ['$resource', '$log', '$http'];
 
-  function ArticlesService($resource, $log) {
+  function ArticlesService($resource, $log, $http) {
     var Article = $resource('/api/articles/:articleId', {
       articleId: '@_id'
     }, {
@@ -20,7 +20,8 @@
       createOrUpdate: function () {
         var article = this;
         return createOrUpdate(article);
-      }
+      },
+      addComment: addComment
     });
 
     return Article;
@@ -43,6 +44,10 @@
         // Handle error internally
         handleError(error);
       }
+    }
+
+    function addComment(id, comment) {
+      return $http.put('/api/articles/' + id + '/comments', comment);
     }
 
     function handleError(error) {

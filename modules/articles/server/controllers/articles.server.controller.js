@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Article = mongoose.model('Article'),
+  Comment = mongoose.model('Comment'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -36,7 +37,6 @@ exports.read = function (req, res) {
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   article.isCurrentUserOwner = !!(req.user && article.user && article.user._id.toString() === req.user._id.toString());
-
   res.json(article);
 };
 
@@ -92,11 +92,31 @@ exports.list = function (req, res) {
   });
 };
 
+exports.addComment = function (req, res) {
+  var comment = new Comment(req.body);
+  comment.article = req.article;
+
+  comment.save(function (err) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      req.article.comments.push(comment);
+      req.article.save(function(err, article) {
+        if(err){ return next(err); }
+
+        res.json(comment);
+      });
+    }
+  });
+
+};
+
 /**
  * Article middleware
  */
 exports.articleByID = function (req, res, next, id) {
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'Article is invalid'

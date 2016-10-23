@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/articles/:articleId',
       permissions: '*'
+    }, {
+      resources: '/api/articles/:articleId/comments',
+      permissions: ['*']
     }]
   }, {
     roles: ['user'],
@@ -29,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/articles/:articleId',
       permissions: ['get']
+    }, {
+      resources: '/api/articles/:articleId/comments',
+      permissions: ['*']
     }]
   }, {
     roles: ['guest'],
@@ -38,6 +44,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/articles/:articleId',
       permissions: ['get']
+    }, {
+      resources: '/api/articles/:articleId/comments',
+      permissions: ['*']
     }]
   }]);
 };
@@ -47,7 +56,6 @@ exports.invokeRolesPolicies = function () {
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
-
   // If an article is being processed and the current user created it then allow any manipulation
   if (req.article && req.user && req.article.user && req.article.user.id === req.user.id) {
     return next();
@@ -64,7 +72,7 @@ exports.isAllowed = function (req, res, next) {
         return next();
       } else {
         return res.status(403).json({
-          message: 'User is not authorized'
+          message: 'User is not authorized' + isAllowed
         });
       }
     }
