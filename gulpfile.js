@@ -48,6 +48,7 @@ gulp.task('env:prod', function () {
 // Nodemon task
 gulp.task('nodemon', function () {
   return plugins.nodemon({
+    exec: 'node-inspector & node --debug',
     script: 'server.js',
     nodeArgs: ['--debug'],
     ext: 'js,html',

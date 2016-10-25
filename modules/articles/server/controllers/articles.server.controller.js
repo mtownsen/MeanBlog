@@ -13,6 +13,7 @@ var path = require('path'),
  * Create an article
  */
 exports.create = function (req, res) {
+  debugger;
   var article = new Article(req.body);
   article.user = req.user;
 
@@ -94,7 +95,8 @@ exports.list = function (req, res) {
 
 exports.addComment = function (req, res) {
   var comment = new Comment(req.body);
-  comment.article = req.article;
+  //comment.article = req.article;
+  comment.user = req.user;
 
   comment.save(function (err) {
     if (err) {
@@ -105,7 +107,6 @@ exports.addComment = function (req, res) {
       req.article.comments.push(comment);
       req.article.save(function(err, article) {
         if(err){ return next(err); }
-
         res.json(comment);
       });
     }
@@ -123,7 +124,17 @@ exports.articleByID = function (req, res, next, id) {
     });
   }
 
-  Article.findById(id).populate('user', 'displayName').exec(function (err, article) {
+//TODO:  populate comments is throwing error after save of new comment
+  Article.findById(id)
+  .populate('user', 'displayName')
+  .populate({
+     path: 'comments',
+     populate: {
+       path: 'user',
+       model: 'User'
+     }
+  })
+  .exec(function (err, article) {
     if (err) {
       return next(err);
     } else if (!article) {

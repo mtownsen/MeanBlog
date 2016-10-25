@@ -47,7 +47,7 @@
     }
 
     function addComment(id, comment) {
-      return $http.put('/api/articles/' + id + '/comments', comment);
+      return $http.post('/api/articles/' + id + '/comments', comment);
     }
 
     function handleError(error) {

@@ -20,7 +20,7 @@ module.exports = function (app) {
 
   // Commentsroutes
   app.route('/api/articles/:articleId/comments').all(articlesPolicy.isAllowed)
-    .put(articles.addComment);
+    .post(articles.addComment);
 
   // Finish by binding the article middleware
   app.param('articleId', articles.articleByID);
