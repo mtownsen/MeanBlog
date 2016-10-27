@@ -13,7 +13,6 @@ var path = require('path'),
  * Create an article
  */
 exports.create = function (req, res) {
-  debugger;
   var article = new Article(req.body);
   article.user = req.user;
 
