@@ -1,12 +1,25 @@
  <section>
-    <!-- Main Content -->
+     <header class="intro-header" style="background-image: url('modules/core/client/img/home-bg.jpg')">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                  <div class="site-heading">
+                      <h1>Clean Blog</h1>
+                      <hr class="small">
+                      <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
+ </section>
+ <section>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview" ng-repeat="article in vm.articles">
                     <a ui-sref="articles.view({ articleId: article._id })">
                         <h2 class="post-title" ng-bind="article.title"></h2>
-<!--                         <h3 class="post-subtitle"></h3> -->
                     </a>
                     <p class="post-meta" ng-if="article.user">Posted by {{article.user.displayName}} on {{article.created | date:'mediumDate'}}</p>
                 </div>

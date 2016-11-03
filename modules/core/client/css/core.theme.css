@@ -81,14 +81,6 @@ hr.small {
   .navbar-custom .navbar-brand:focus {
     color: rgba(255, 255, 255, 0.8);
   }
-  .navbar-custom .nav li a {
-    color: white;
-    padding: 20px;
-  }
-  .navbar-custom .nav li a:hover,
-  .navbar-custom .nav li a:focus {
-    color: rgba(255, 255, 255, 0.8);
-  }
 }
 @media only screen and (min-width: 1170px) {
   .navbar-custom {

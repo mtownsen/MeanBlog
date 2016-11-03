@@ -1,4 +1,48 @@
+ <section>
+     <header class="intro-header" style="background-image: url('modules/core/client/img/home-bg.jpg')">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                  <div class="post-heading">
+                    <h1>{{vm.article.title}}</h1>
+                    <span class="meta">Posted by <a href="#">{{vm.article.user.displayName}}</a> on {{vm.article.created | date:'mediumDate'}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
+ </section>
 <section>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <p ng-bind="vm.article.content"></p>
+          </div>
+      </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="list-group">
+            <a ng-repeat="comment in vm.article.comments" class="list-group-item">
+              <small class="list-group-item-text">
+                Posted on
+                <span ng-bind="comment.created | date:'mediumDate'"></span>
+                by
+                <span ng-if="comment.user" ng-bind="comment.user.displayName"></span>
+                <span ng-if="!comment.user">Deleted User</span>
+              </small>
+              <p class="list-group-item-text" ng-bind="comment.body"></p>
+            </a>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section>
   <div class="page-header">
     <h1 ng-bind="vm.article.title"></h1>
   </div>
@@ -38,3 +82,4 @@
     </a>
   </div>
 </section>
+ -->
